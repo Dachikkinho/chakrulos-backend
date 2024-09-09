@@ -3,11 +3,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 import { JwtService } from '@nestjs/jwt';
+import { PlayListRepository } from 'src/playlist/playlist.repository';
 
 @Injectable()
 export class UsersService {
-
-  constructor( private readonly usersRepository: UsersRepository,private readonly jwtService: JwtService){}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly jwtService: JwtService,
+    private readonly playlistRepository: PlayListRepository,
+  ) {}
   create(createUserDto: CreateUserDto) {
     return this.usersRepository.create(createUserDto);
   }
@@ -21,28 +25,54 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return this.usersRepository.update(id,updateUserDto);
+    return this.usersRepository.update(id, updateUserDto);
   }
 
   remove(id: number) {
     return this.usersRepository.remove(id);
   }
- 
-  
-  async me(request){
-    try{
-      let cookie = request.cookies['jwt']
 
-      let data = await this.jwtService.verifyAsync(cookie)      
+  async me(id: number) {
+    let user = await this.usersRepository.findOne(id);
 
-      if(!data){
-        throw new UnauthorizedException()
-      }
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    let playlist = await this.playlistRepository.findOneUsersAllPlayList(id);
 
-      let user = this.usersRepository.findOne(data.id)
-       return user
-    } catch(err){
-      throw new UnauthorizedException()
-   }
+    return {
+      user,
+      playlist,
+    };
+
+    // for later use
+    //   try {
+    //     let cookie = request.cookies['jwt'];
+
+    //     let data = await this.jwtService.verifyAsync(cookie);
+
+    //     if (!data) {
+    //       throw new UnauthorizedException();
+    //     }
+
+    //     let user = await this.usersRepository.findOne(data.id);
+    //     let favorite = await this.favoritesRepository.findOneUserAllFavorite(
+    //       data.id,
+    //     );
+    //     let playlist = await this.playlistRepository.findOneUsersAllPlayList(
+    //       data.id,
+    //     );
+
+    //     return {
+    //       user,
+    //       favorite,
+    //       playlist,
+    //     };
+    //   } catch (err) {
+    //     console.log('try');
+
+    //     throw new UnauthorizedException();
+    //   }
+    // }
   }
 }
