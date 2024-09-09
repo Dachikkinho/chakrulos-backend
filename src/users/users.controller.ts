@@ -28,6 +28,11 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Patch('/block/:id')
+  blockUser(@Param('id') id: string) {
+    return this.usersService.block(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);

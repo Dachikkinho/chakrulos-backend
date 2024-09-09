@@ -6,8 +6,10 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-
-  constructor( private readonly usersRepository: UsersRepository,private readonly jwtService: JwtService){}
+  constructor(
+    private readonly usersRepository: UsersRepository,
+    private readonly jwtService: JwtService,
+  ) {}
   create(createUserDto: CreateUserDto) {
     return this.usersRepository.create(createUserDto);
   }
@@ -21,28 +23,31 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return this.usersRepository.update(id,updateUserDto);
+    return this.usersRepository.update(id, updateUserDto);
   }
 
   remove(id: number) {
     return this.usersRepository.remove(id);
   }
- 
-  
-  async me(request){
-    try{
-      let cookie = request.cookies['jwt']
 
-      let data = await this.jwtService.verifyAsync(cookie)      
+  block(id: number) {
+    return this.usersRepository.block(id);
+  }
 
-      if(!data){
-        throw new UnauthorizedException()
+  async me(request) {
+    try {
+      let cookie = request.cookies['jwt'];
+
+      let data = await this.jwtService.verifyAsync(cookie);
+
+      if (!data) {
+        throw new UnauthorizedException();
       }
 
-      let user = this.usersRepository.findOne(data.id)
-       return user
-    } catch(err){
-      throw new UnauthorizedException()
-   }
+      let user = this.usersRepository.findOne(data.id);
+      return user;
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
   }
 }
