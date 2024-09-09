@@ -26,6 +26,7 @@ export class UsersRepository{
     .createQueryBuilder('users')
     .select([
       'users.id',
+      'users.email',
       'users.createdAt',
       'users.updatedAt',
       'users.delatedAt'
