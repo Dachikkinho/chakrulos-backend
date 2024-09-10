@@ -21,14 +21,7 @@ async function bootstrap() {
   const express = require('express');
   const cors = require('cors');
 
-  app.use(
-    cors({
-      origin: 'https://chakrulos.ge', // Your frontend URL
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      preflightContinue: false,
-      optionsSuccessStatus: 204,
-    }),
-  );
+  app.enableCors();
 
   await app.listen(3001);
 }
