@@ -75,4 +75,8 @@ export class UsersService {
     //   }
     // }
   }
+
+  block(id: number) {
+    return this.usersRepository.block(id);
+  }
 }

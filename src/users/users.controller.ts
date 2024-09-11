@@ -49,4 +49,9 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
+
+  @Patch('/block/:id')
+  blcok(@Param('id') id: string) {
+    return this.usersService.block(+id);
+  }
 }

@@ -82,4 +82,16 @@ export class UsersRepository{
     .where('users.id = :id',{id})
     .getOne()
   }
+
+  async block(id: number) {
+    const user = this.usersRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new BadRequestException('USER NOT FOUND');
+    }
+
+    (await user).blocked = !(await user).blocked;
+
+    return await this.usersRepository.update(id, await user);
+  }
 }

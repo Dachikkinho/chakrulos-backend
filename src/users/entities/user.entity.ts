@@ -22,6 +22,9 @@ export class UserEntity {
 
     @OneToMany(() => S3service, s3service => s3service.user)
     uploads: S3service[]
+
+    @Column({default: false})
+    blocked: boolean;
     
     @CreateDateColumn()
     createdAt: Date
