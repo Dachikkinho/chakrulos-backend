@@ -13,12 +13,15 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from './users.guard';
+import { Roles } from 'src/auth/decorators/public.decorator';
+import { RoleEnum } from 'src/auth/roles/roles.enum';
 
+@Roles(RoleEnum.admin)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(RoleEnum.user)
   @Get('/me')
   me(@Req() request) {
     const userId = request.user.id;
