@@ -31,4 +31,8 @@ export class PlaylistService {
   async findOneUsersAllPlayList(id: number){
     return await this.playListRepository.findOneUsersAllPlayList(id)
   }
+
+  async removeMusicFromPlaylist(playlistId: number, musicId: number) {
+    return this.playListRepository.removeMusicFromPlaylist(playlistId, musicId);
+  }
 }

@@ -24,7 +24,9 @@ export class MusicRepositories {
         'music.authorId',
         'music.id',
         'music.image',
+        'music.createdAt'
       ])
+      .orderBy('music.createdAt', 'DESC')
       .getMany();
   }
 

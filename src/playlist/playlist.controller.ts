@@ -37,4 +37,13 @@ export class PlaylistController {
     return this.playlistService.remove(+id);
   }
 
+
+  @Delete(':playlistId/music/:musicId')
+  async removeMusic(
+    @Param('playlistId') playlistId: number,
+    @Param('musicId') musicId: number,
+  ) {
+    return this.playlistService.removeMusicFromPlaylist(playlistId, musicId);
+  }
+
 }

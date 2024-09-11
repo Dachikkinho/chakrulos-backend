@@ -93,4 +93,19 @@ export class PlayListRepository {
       .where('playList.id = :id', { id })
       .getOne();
   }
+
+  async removeMusicFromPlaylist(playlistId: number, musicId: number) {
+    let playList = await this.playlistRepository.findOne({
+      where: { id: playlistId },
+      relations: ['musics'],
+    });
+
+    if (!playList) {
+      throw new Error('Playlist not found');
+    }
+
+    playList.musics = playList.musics.filter((music) => music.id !== musicId);
+
+    return this.playlistRepository.save(playList);
+  }
 }
