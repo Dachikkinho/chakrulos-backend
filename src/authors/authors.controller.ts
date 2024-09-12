@@ -69,6 +69,7 @@ export class AuthorsController {
   }
 
   @Get(':id')
+  @Roles(RoleEnum.user, RoleEnum.admin)
   findOne(@Param('id') id: string) {
     return this.authorsService.findOne(+id);
   }
