@@ -23,7 +23,10 @@ import { extname } from 'path';
 import { validateFile } from 'src/s3service/file-validation/file-validation.utils';
 import { getFileName } from 'src/s3service/file-validation/file-name.utils';
 import { S3serviceService } from 'src/s3service/s3service.service';
+import { Roles } from 'src/auth/decorators/public.decorator';
+import { RoleEnum } from 'src/auth/roles/roles.enum';
 
+@Roles(RoleEnum.admin)
 @Controller('music')
 export class MusicControllers {
   constructor(
@@ -59,11 +62,13 @@ export class MusicControllers {
   }
 
   @Get()
+  @Roles(RoleEnum.user)
   findAll() {
     return this.musicService.findAll();
   }
 
   @Get(':id')
+  @Roles(RoleEnum.user)
   findOne(@Param('id') id: string) {
     return this.musicService.findOne(+id);
   }

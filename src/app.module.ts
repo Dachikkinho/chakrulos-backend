@@ -13,6 +13,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { S3serviceModule } from './s3service/s3service.module';
+import { JwtModule } from '@nestjs/jwt';
+import 'dotenv/config';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 
 @Module({
@@ -31,6 +35,11 @@ import { S3serviceModule } from './s3service/s3service.module';
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads/'
     }),
+    JwtModule.register({
+      secret: process.env.SECRET,
+      global: true,
+      signOptions: {expiresIn: '7d'}
+    }),
     MusicModule,
     AuthorsModule,
     AlbumModule,
@@ -41,7 +50,10 @@ import { S3serviceModule } from './s3service/s3service.module';
     S3serviceModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: AuthGuard
+  }],
 })
 
 export class AppModule {}

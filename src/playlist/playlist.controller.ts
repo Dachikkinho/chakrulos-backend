@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { RoleEnum } from 'src/auth/roles/roles.enum';
+import { Roles } from 'src/auth/decorators/public.decorator';
 
+@Roles(RoleEnum.admin, RoleEnum.user)
 @Controller('playlist')
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) {}

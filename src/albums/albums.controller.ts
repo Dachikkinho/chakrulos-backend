@@ -20,7 +20,10 @@ import { diskStorage } from 'multer';
 import { validateFile } from 'src/s3service/file-validation/file-validation.utils';
 import { getFileName } from 'src/s3service/file-validation/file-name.utils';
 import { S3serviceService } from 'src/s3service/s3service.service';
+import { Roles } from 'src/auth/decorators/public.decorator';
+import { RoleEnum } from 'src/auth/roles/roles.enum';
 
+@Roles(RoleEnum.admin)
 @Controller('album')
 export class AlbumController {
   constructor(
@@ -53,11 +56,13 @@ export class AlbumController {
   }
 
   @Get()
+  @Roles(RoleEnum.user)
   async findAll() {
     return await this.albumService.findAll();
   }
 
   @Get(':id')
+  @Roles(RoleEnum.user)
   async findOne(@Param('id') id: string) {
     return await this.albumService.findOne(+id);
   }
