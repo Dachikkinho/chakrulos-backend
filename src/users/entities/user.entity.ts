@@ -38,7 +38,4 @@ export class UserEntity {
 
     @DeleteDateColumn()
     delatedAt: Date
-
-    @Column({default: RoleEnum.user, type: 'enum', enum: RoleEnum})
-    role: RoleEnum;
 }
