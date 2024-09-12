@@ -35,7 +35,7 @@ export class AthorRepository {
         'm.id',
         'm.image',
         'author',
-        'a'
+        'a',
       ])
       .where('author.id = :id', { id })
       .getOne();
@@ -93,7 +93,7 @@ export class AthorRepository {
     return await this.authorRepository
       .createQueryBuilder('author')
       .leftJoinAndSelect('author.musics', 'm')
-      .where('author.firstName OR author.firstName LIKE :search', {
+      .where('author.firstName OR author.lastName LIKE :search', {
         search: `${search}%`,
       })
       .getMany();
