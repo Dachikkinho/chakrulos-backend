@@ -62,13 +62,13 @@ export class MusicControllers {
   }
 
   @Get()
-  @Roles(RoleEnum.user)
+  @Roles(RoleEnum.user, RoleEnum.admin)
   findAll() {
     return this.musicService.findAll();
   }
 
   @Get(':id')
-  @Roles(RoleEnum.user)
+  @Roles(RoleEnum.user, RoleEnum.admin)
   findOne(@Param('id') id: string) {
     return this.musicService.findOne(+id);
   }

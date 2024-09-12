@@ -1,4 +1,5 @@
 import { MaxLength, MinLength } from "class-validator";
+import { RoleEnum } from "src/auth/roles/roles.enum";
 import { PlaylistEntity } from "src/playlist/entities/playlist.entity";
 import { S3service } from "src/s3service/entities/s3service.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
@@ -16,6 +17,9 @@ export class UserEntity {
     @MinLength(8)
     @MaxLength(9)
     password: string
+
+    @Column({default: RoleEnum.user, type: 'enum', enum: RoleEnum})
+    role: RoleEnum;
 
     @OneToMany(() => PlaylistEntity,(playlist) => playlist.user)
     playlists: PlaylistEntity[]
