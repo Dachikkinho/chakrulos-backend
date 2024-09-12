@@ -1,34 +1,31 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import * as Bcrypt from 'bcrypt';
 import { UsersRepository } from 'src/users/users.repository';
+import * as Bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userRepository: UsersRepository,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor (private readonly usersRepo: UsersRepository, private readonly jwtService: JwtService) {}
 
-  async LoginUser(createAuthDto: CreateAuthDto, response) {
-    let user = await this.userRepository.findUserByEmail(createAuthDto.email);
+  async Login(data: CreateAuthDto) {
+    let user = await this.usersRepo.findUserByEmail(data.email)
 
-    if (user.blocked) {
-      throw new UnauthorizedException('USER IS BLOCKED');
-    } else if (user) {
-      if (await Bcrypt.compare(createAuthDto.password, user.password)) {
-        let jwt = await this.jwtService.signAsync({ id: user.id });
-        response.cookie('jwt', jwt, { httpOnly: true });
-        return {
-          token: jwt,
-        };
-      }
+    if (!user) {
+      throw new UnauthorizedException('access denied')
     }
-    throw new BadRequestException('bed request');
+
+    const IsPasswordCorrect = await Bcrypt.compare(data.password, user.password)
+
+    if (!IsPasswordCorrect) {
+      throw new UnauthorizedException('access denied')
+    }
+
+    const jwtToken = await this.jwtService.signAsync({
+      id: user.id,
+      role: user.role
+    })
+
+    return jwtToken
   }
 }

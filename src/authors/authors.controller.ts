@@ -57,13 +57,13 @@ export class AuthorsController {
   }
 
   @Get('category/:category')
-  @Roles(RoleEnum.user)
+  @Roles(RoleEnum.user, RoleEnum.admin)
   findWithCategory(@Param('category') category: string) {
     return this.authorsService.findWithCategory(category);
   }
 
   @Get()
-  @Roles(RoleEnum.user)
+  @Roles(RoleEnum.user, RoleEnum.admin)
   findAll() {
     return this.authorsService.findAll();
   }

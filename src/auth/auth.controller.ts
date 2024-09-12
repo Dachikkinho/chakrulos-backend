@@ -4,12 +4,13 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { Response,Request } from 'express';
 import { Public } from './decorators/public.decorator';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
   @Public()
   @Post('/login')
-  Login(@Body() createAuthDto: CreateAuthDto, @Res({passthrough: true}) response: Response) {
-    return this.authService.LoginUser(createAuthDto,response);
+  Login(@Body() data: CreateAuthDto) {
+    return this.authService.Login(data)
   }
 }

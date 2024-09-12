@@ -13,7 +13,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from './users.guard';
-import { Roles } from 'src/auth/decorators/public.decorator';
+import { Public, Roles } from 'src/auth/decorators/public.decorator';
 import { RoleEnum } from 'src/auth/roles/roles.enum';
 
 @Roles(RoleEnum.admin)
@@ -21,13 +21,14 @@ import { RoleEnum } from 'src/auth/roles/roles.enum';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Roles(RoleEnum.user)
   @Get('/me')
+  @Roles(RoleEnum.user, RoleEnum.admin)
   me(@Req() request) {
     const userId = request.user.id;
     return this.usersService.me(userId);
   }
 
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);

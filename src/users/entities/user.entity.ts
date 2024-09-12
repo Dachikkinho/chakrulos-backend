@@ -18,6 +18,9 @@ export class UserEntity {
     @MaxLength(9)
     password: string
 
+    @Column({default: RoleEnum.user, type: 'enum', enum: RoleEnum})
+    role: RoleEnum;
+
     @OneToMany(() => PlaylistEntity,(playlist) => playlist.user)
     playlists: PlaylistEntity[]
 

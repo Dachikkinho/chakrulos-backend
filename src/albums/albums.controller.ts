@@ -56,13 +56,13 @@ export class AlbumController {
   }
 
   @Get()
-  @Roles(RoleEnum.user)
+  @Roles(RoleEnum.user, RoleEnum.admin)
   async findAll() {
     return await this.albumService.findAll();
   }
 
   @Get(':id')
-  @Roles(RoleEnum.user)
+  @Roles(RoleEnum.user, RoleEnum.admin)
   async findOne(@Param('id') id: string) {
     return await this.albumService.findOne(+id);
   }
