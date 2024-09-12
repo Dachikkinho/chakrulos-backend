@@ -44,6 +44,7 @@ export class UsersRepository {
         'users.updatedAt',
         'users.delatedAt',
         'users.blocked',
+        'users.email',
       ])
       .getOne();
   }
