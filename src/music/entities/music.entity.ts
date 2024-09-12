@@ -1,5 +1,6 @@
 import { AlbumEntity } from 'src/albums/entities/album.entity';
 import { AuthorEntity } from 'src/authors/entities/author.entity';
+import { FavoriteEntity } from 'src/favorites/entities/favorite.entity';
 import { PlaylistEntity } from 'src/playlist/entities/playlist.entity';
 import {
   Column,
@@ -8,6 +9,7 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,6 +42,9 @@ export class MusicEntity {
 
   @ManyToMany(() => PlaylistEntity, (playlist) => playlist.musics)
   playLists: PlaylistEntity[];
+
+  @OneToMany(() => FavoriteEntity,(favorite) => favorite.music)
+  favorites: FavoriteEntity[]
 
   @CreateDateColumn()
   createdAt: Date;
