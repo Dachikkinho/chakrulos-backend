@@ -93,9 +93,12 @@ export class AthorRepository {
     return await this.authorRepository
       .createQueryBuilder('author')
       .leftJoinAndSelect('author.musics', 'm')
-      .where('author.firstName OR author.lastName LIKE :search', {
-        search: `${search}%`,
-      })
+      .where(
+        '(author.firstName LIKE :search OR author.lastName LIKE :search)',
+        {
+          search: `${search}%`,
+        },
+      )
       .getMany();
   }
 }
