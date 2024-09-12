@@ -10,7 +10,6 @@ export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
-    private readonly playlistRepository: PlayListRepository,
   ) {}
   create(createUserDto: CreateUserDto) {
     return this.usersRepository.create(createUserDto);
@@ -38,12 +37,8 @@ export class UsersService {
     if (!user) {
       throw new UnauthorizedException();
     }
-    let playlist = await this.playlistRepository.findOneUsersAllPlayList(id);
 
-    return {
-      user,
-      playlist,
-    };
+    return user
 
     // for later use
     //   try {

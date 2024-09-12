@@ -37,15 +37,11 @@ export class UsersRepository {
   async findOne(id: number) {
     return await this.usersRepository
       .createQueryBuilder('users')
+      .leftJoinAndSelect('users.favorites', 'favorites')
+      .leftJoinAndSelect('favorites.music', 'm')
+      .leftJoinAndSelect('users.playlists', 'playlist')
+      .leftJoinAndSelect('playlist.musics', 'ms')
       .where('users.id = :id', { id })
-      .select([
-        'users.id',
-        'users.createdAt',
-        'users.updatedAt',
-        'users.delatedAt',
-        'users.blocked',
-        'users.email',
-      ])
       .getOne();
   }
 

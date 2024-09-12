@@ -19,7 +19,7 @@ import { PlaylistEntity } from 'src/playlist/entities/playlist.entity';
     PlaylistModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService,UsersRepository, PlayListRepository],
+  providers: [UsersService,UsersRepository],
   exports: [UsersRepository]
 })
 export class UsersModule {}
