@@ -101,4 +101,12 @@ export class AthorRepository {
       )
       .getMany();
   }
+
+  async increaseViews(id: number) {
+    const author = await this.authorRepository.findOneBy({ id });
+
+    author.listens += 1;
+
+    await this.authorRepository.update(id, author);
+  }
 }
