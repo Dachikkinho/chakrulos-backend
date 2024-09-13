@@ -39,17 +39,6 @@ export class UsersRepository {
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.favorites', 'favorites')
       .leftJoinAndSelect('favorites.music', 'm')
-      .leftJoin('m.author', 'a')
-      .select([
-        'a.firstName',
-        'a.lastName',
-        'm.name',
-        'm.url',
-        'm.authorId',
-        'm.id',
-        'm.image',
-        'm.createdAt',
-      ])
       .leftJoinAndSelect('users.playlists', 'playlist')
       .leftJoinAndSelect('playlist.musics', 'ms')
       .where('users.id = :id', { id })
