@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UsersRepository } from 'src/users/users.repository';
 import * as Bcrypt from 'bcrypt';
@@ -24,11 +24,11 @@ export class AuthService {
     );
 
     if (!IsPasswordCorrect) {
-      throw new UnauthorizedException('access denied');
+      throw new BadRequestException('access denied');
     }
 
     if (user.blocked) {
-      throw new UnauthorizedException('USER IS BLOCKED');
+      throw new BadRequestException('USER IS BLOCKED');
     }
 
     const jwtToken = await this.jwtService.signAsync({

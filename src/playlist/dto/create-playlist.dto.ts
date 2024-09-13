@@ -13,5 +13,4 @@ export class CreatePlaylistDto {
 
     @IsNumber()
     userId: number
-
 }
