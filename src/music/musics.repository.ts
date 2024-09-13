@@ -79,7 +79,7 @@ export class MusicRepositories {
   async search(search: string) {
     return await this.musicsRepository
       .createQueryBuilder('music')
-      .where('music.name LIKE :search', { search: `${search}%` })
+      .where('music.name LIKE :search', { search: `%${search}%` })
       .leftJoin('music.author', 'a')
       .select([
         'a.firstName',

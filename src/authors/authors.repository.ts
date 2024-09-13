@@ -94,10 +94,9 @@ export class AthorRepository {
       .createQueryBuilder('author')
       .leftJoinAndSelect('author.musics', 'm')
       .where(
-        '(author.firstName LIKE :search OR author.lastName LIKE :search)',
-        {
-          search: `${search}%`,
-        },
+        '(author.firstName LIKE :search OR author.lastName LIKE :search) ' +
+        'OR (CONCAT(author.firstName, \' \', author.lastName) LIKE :search)'
+        , { search: `%${search}%` }
       )
       .getMany();
   }
