@@ -53,7 +53,7 @@ export class UsersRepository {
     try {
       return this.usersRepository.save(user);
     } catch (err) {
-      throw new BadRequestException('this email alwredy used');
+      throw new BadRequestException('this email already used');
     }
   }
 
@@ -66,7 +66,7 @@ export class UsersRepository {
     try {
       return await this.usersRepository.update(id, user);
     } catch (err) {
-      throw new BadRequestException('this email alwredy used');
+      throw new BadRequestException('this email already used');
     }
   }
 

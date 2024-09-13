@@ -11,7 +11,8 @@ export class UsersService {
     private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
   ) {}
-  create(createUserDto: CreateUserDto) {
+
+  async create(createUserDto: CreateUserDto) {
     return this.usersRepository.create(createUserDto);
   }
 

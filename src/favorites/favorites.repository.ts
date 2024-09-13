@@ -41,7 +41,7 @@ export class FavoritesRepository {
         if(!music){
           return await this.favoriteRepository.save(favorite)
         }else{
-          throw new BadRequestException('this music alwredy used');
+          throw new BadRequestException('this music already used');
         }
 
         
