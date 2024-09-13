@@ -17,6 +17,8 @@ import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { FavoriteEntity } from './favorites/entities/favorite.entity';
+import { FavoritesModule } from './favorites/favorites.module';
 
 
 @Module({
@@ -48,6 +50,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
     PlaylistModule,
     AuthModule,
     S3serviceModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService, {

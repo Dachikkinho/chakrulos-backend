@@ -3,7 +3,7 @@ import { RoleEnum } from "src/auth/roles/roles.enum";
 import { FavoriteEntity } from "src/favorites/entities/favorite.entity";
 import { PlaylistEntity } from "src/playlist/entities/playlist.entity";
 import { S3service } from "src/s3service/entities/s3service.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class UserEntity {
@@ -28,6 +28,9 @@ export class UserEntity {
     @OneToMany(() => S3service, s3service => s3service.user)
     uploads: S3service[]
 
+    @OneToMany(() => FavoriteEntity,(favorites) => favorites.user)
+    favorites: FavoriteEntity[]
+
     @Column({default: false})
     blocked: boolean;
     
@@ -39,7 +42,4 @@ export class UserEntity {
 
     @DeleteDateColumn()
     delatedAt: Date
-
-    @OneToMany(() => FavoriteEntity,(favorite) => favorite.user)
-    favorites: FavoriteEntity[]
 }
