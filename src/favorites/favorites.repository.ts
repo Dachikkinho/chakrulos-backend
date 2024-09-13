@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common"
+import { BadRequestException, Injectable } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { FavoriteEntity } from "./entities/favorite.entity"
 import { Repository } from "typeorm"
@@ -32,7 +32,18 @@ export class FavoritesRepository {
       async create(data: CreateFavoriteDto) {
         let favorite = this.favoriteRepository.create(data)
 
-        return await this.favoriteRepository.save(favorite)
+        let music = await this.favoriteRepository
+        .createQueryBuilder('favorite')
+        .where('favorite.musicId = :musicId', { musicId: data.musicId })
+        .andWhere('favorite.userId = :userId', { userId: data.userId })
+        .getOne()
+
+        if(!music){
+          return await this.favoriteRepository.save(favorite)
+        }else{
+          throw new BadRequestException('this music alwredy used');
+        }
+
         
       }
     
