@@ -53,12 +53,7 @@ export class FavoritesRepository {
       }
     
       async remove(id: number) {
-        await this.favoriteRepository.softDelete(id)
+        return  await this.favoriteRepository.delete(id)
     
-        return await this.favoriteRepository
-        .createQueryBuilder('favorite')
-        .withDeleted()
-        .where('favorite.id = :id',{id})
-        .getOne()
       }
 }

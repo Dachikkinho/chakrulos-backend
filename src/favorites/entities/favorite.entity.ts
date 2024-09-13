@@ -19,13 +19,4 @@ export class FavoriteEntity {
     @ManyToOne(() => MusicEntity, (music) => music.favorites)
     music: MusicEntity
 
-    @CreateDateColumn()
-    createdAt: Date
-
-    @UpdateDateColumn()
-    updatedAt: Date
-
-    @DeleteDateColumn()
-    delatedAt: Date
-
 }
