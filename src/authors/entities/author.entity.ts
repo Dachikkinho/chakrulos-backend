@@ -34,7 +34,7 @@ export class AuthorEntity {
   @Column()
   Category: string;
 
-  @Column({ default: 0 })
+  @Column({ default: 0,type: 'integer' })
   listens: number;
 
   @OneToMany(() => MusicEntity, (music) => music.author)

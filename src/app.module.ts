@@ -20,9 +20,9 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { FavoriteEntity } from './favorites/entities/favorite.entity';
 import { FavoritesModule } from './favorites/favorites.module';
 
-
 @Module({
-  imports: [ConfigModule.forRoot(),
+  imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -31,15 +31,16 @@ import { FavoritesModule } from './favorites/favorites.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
+      synchronize: true,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads/'
+      serveRoot: '/uploads/',
     }),
     JwtModule.register({
       secret: process.env.SECRET,
       global: true,
-      signOptions: {expiresIn: '7d'}
+      signOptions: { expiresIn: '7d' },
     }),
     MusicModule,
     AuthorsModule,
@@ -52,10 +53,12 @@ import { FavoritesModule } from './favorites/favorites.module';
     FavoritesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: AuthGuard
-  }],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
-
 export class AppModule {}
