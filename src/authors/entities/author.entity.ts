@@ -1,43 +1,54 @@
-import { AlbumEntity } from "src/albums/entities/album.entity";
-import { MusicEntity } from "src/music/entities/music.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AlbumEntity } from 'src/albums/entities/album.entity';
+import { MusicEntity } from 'src/music/entities/music.entity';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class AuthorEntity {
-    
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    firstName: string
+  @Column()
+  firstName: string;
 
-    @Column()
-    lastName: string
+  @Column()
+  lastName: string;
 
-    @Column({type: 'longtext'})
-    biography: string
+  @Column({ type: 'longtext' })
+  biography: string;
 
-    @Column()
-    image: string
+  @Column()
+  image: string;
 
-    @Column()
-    Region: string
+  @Column()
+  Region: string;
 
-    @Column()
-    Category: string
+  @Column()
+  Category: string;
 
-    @OneToMany(() => MusicEntity, (music) => music.author)
-    musics: MusicEntity[]
+  @Column({ default: 0 })
+  listens: number;
 
-    @CreateDateColumn()
-    createdAt: Date
+  @OneToMany(() => MusicEntity, (music) => music.author)
+  musics: MusicEntity[];
 
-    @UpdateDateColumn()
-    updatedAt: Date
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @DeleteDateColumn()
-    delatedAt: Date
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-    @OneToMany(() => AlbumEntity, (album) => album.author)
-    album: AlbumEntity;
+  @DeleteDateColumn()
+  delatedAt: Date;
+
+  @OneToMany(() => AlbumEntity, (album) => album.author)
+  album: AlbumEntity;
 }

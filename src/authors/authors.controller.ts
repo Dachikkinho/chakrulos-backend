@@ -79,6 +79,12 @@ export class AuthorsController {
     return this.authorsService.update(+id, updateAuthorDto);
   }
 
+  @Patch('view/:id')
+  @Roles(RoleEnum.user, RoleEnum.admin)
+  increaseViews(@Param('id') id: string) {
+    return this.authorsService.increaseViews(+id);
+  }
+
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const image = (await this.authorsService.findOne(+id)).image;
