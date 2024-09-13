@@ -31,8 +31,4 @@ export class AuthorsService {
   async remove(id: number) {
     return await this.AutorRepository.remove(id);
   }
-
-  async increaseViews(id: number) {
-    return await this.AutorRepository.increaseViews(id);
-  }
 }
