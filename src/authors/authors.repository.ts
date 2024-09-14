@@ -55,6 +55,7 @@ export class AthorRepository {
       .leftJoinAndSelect('author.musics', 'm')
       .leftJoinAndSelect('author.album', 'a')
       .where(`author.${categ} = :category`, { category })
+      .orderBy('author.listens', 'ASC')
       .getMany();
   }
 
@@ -95,8 +96,8 @@ export class AthorRepository {
       .leftJoinAndSelect('author.musics', 'm')
       .where(
         '(author.firstName LIKE :search OR author.lastName LIKE :search) ' +
-        'OR (CONCAT(author.firstName, \' \', author.lastName) LIKE :search)'
-        , { search: `%${search}%` }
+          "OR (CONCAT(author.firstName, ' ', author.lastName) LIKE :search)",
+        { search: `%${search}%` },
       )
       .getMany();
   }
