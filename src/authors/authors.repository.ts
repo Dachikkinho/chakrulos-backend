@@ -55,7 +55,7 @@ export class AthorRepository {
       .leftJoinAndSelect('author.musics', 'm')
       .leftJoinAndSelect('author.album', 'a')
       .where(`author.${categ} = :category`, { category })
-      .orderBy('author.listens', 'ASC')
+      .orderBy('author.listens', 'DESC')
       .getMany();
   }
 
